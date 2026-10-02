@@ -16,4 +16,4 @@ CREATE TABLE IF NOT EXISTS resource (
 
     CONSTRAINT chk_resource_availability
         CHECK (availability IN ('AVAILABLE', 'UNAVAILABLE', 'MAINTENANCE'))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+);
