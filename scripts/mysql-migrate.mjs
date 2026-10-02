@@ -14,6 +14,9 @@ const MANIFEST = [
   { file: 'create_recovery_episode.sql' },
   { file: 'create_transition_requirement.sql' },
   { file: 'create_resource_allocation.sql' },
+  { file: 'create_care_handoff.sql' }, 
+  { file: 'create_care_document.sql' },
+  { file: 'create_audit_log.sql' },
 ];
 
 const required = ['MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DATABASE'];
