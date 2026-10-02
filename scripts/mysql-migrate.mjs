@@ -8,8 +8,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dir = path.resolve(__dirname, '../db/mysql');
 
 const MANIFEST = [
-  { file: 'create_tables.sql', stub: true },
-  { file: 'create_discharge_plan.sql' },
+  { file: 'create_tables.sql', stub: true },   
+  { file: 'create_discharge_plan.sql' },        
+  { file: 'create_resource.sql' },              
 ];
 
 const required = ['MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DATABASE'];
