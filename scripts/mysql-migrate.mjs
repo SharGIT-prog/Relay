@@ -13,6 +13,7 @@ const MANIFEST = [
   { file: 'create_resource.sql' },
   { file: 'create_recovery_episode.sql' },
   { file: 'create_transition_requirement.sql' },
+  { file: 'create_resource_allocation.sql' },
 ];
 
 const required = ['MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DATABASE'];
