@@ -1,0 +1,16 @@
+{
+  "name": "continuity-of-care",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Continuity-of-Care Hospital Resource Management System",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "db:pg:migrate": "node scripts/pg-migrate.mjs",
+    "db:pg:verify": "node scripts/pg-verify.mjs"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "pg": "^8.13.0"
+  }
+}
