@@ -11,6 +11,7 @@ const MIGRATION_ORDER = [
   'enable_pgvector.sql',
   'create_care_document_chunk.sql',
   'create_vector_indexes.sql',
+  'create_embedding_model_info.sql',
 ];
 
 const required = ['PGHOST', 'PGPORT', 'PGUSER', 'PGPASSWORD', 'PGDATABASE'];
