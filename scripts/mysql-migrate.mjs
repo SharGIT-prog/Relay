@@ -17,6 +17,9 @@ const MANIFEST = [
   { file: 'create_care_handoff.sql' }, 
   { file: 'create_care_document.sql' },
   { file: 'create_audit_log.sql' },
+  { file: 'create_sp_allocate_resource.sql' },
+  { file: 'create_v_transition_readiness.sql' },
+  { file: 'create_trg_allocation_requirement.sql' },
 ];
 
 const required = ['MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DATABASE'];
