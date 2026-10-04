@@ -1,5 +1,7 @@
 DROP PROCEDURE IF EXISTS sp_allocate_resource;
 
+DELIMITER $$
+
 CREATE PROCEDURE sp_allocate_resource(
     IN  p_admission_id    BIGINT,
     IN  p_resource_id     BIGINT,
@@ -19,10 +21,8 @@ BEGIN
     DECLARE v_req_admission    BIGINT;
     DECLARE v_conflicts        INT DEFAULT 0;
 
-    -- If no row found, v_found = 0.
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET v_found = 0;
 
-    -- If error occurs, undo everything and re-raise.
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
@@ -41,6 +41,7 @@ BEGIN
 
     -- 2. Lock the resource row and read state
     SET v_found = 1;
+
     SELECT resource_type, availability
       INTO v_resource_type, v_availability
       FROM resource
@@ -67,13 +68,15 @@ BEGIN
             MESSAGE_TEXT = 'Admission not found';
     END IF;
 
-    -- 4. Must exist, be open, match admission and resource type
+    -- 4. Requirement validation
     IF p_requirement_id IS NOT NULL THEN
         SET v_found = 1;
+
         SELECT tr.status, tr.resource_type, dp.admission_id
           INTO v_req_status, v_req_type, v_req_admission
           FROM transition_requirement tr
-          JOIN discharge_plan dp ON dp.discharge_id = tr.discharge_id
+          JOIN discharge_plan dp
+            ON dp.discharge_id = tr.discharge_id
          WHERE tr.requirement_id = p_requirement_id
            FOR UPDATE OF tr;
 
@@ -82,7 +85,10 @@ BEGIN
                 MESSAGE_TEXT = 'Transition requirement not found';
         END IF;
 
-        IF v_req_status COLLATE utf8mb4_0900_ai_ci IN ('FULFILLED' COLLATE utf8mb4_0900_ai_ci, 'CANCELLED' COLLATE utf8mb4_0900_ai_ci) THEN
+        IF v_req_status COLLATE utf8mb4_0900_ai_ci IN (
+            'FULFILLED' COLLATE utf8mb4_0900_ai_ci,
+            'CANCELLED' COLLATE utf8mb4_0900_ai_ci
+        ) THEN
             SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 50006,
                 MESSAGE_TEXT = 'Transition requirement is already FULFILLED or CANCELLED';
         END IF;
@@ -92,7 +98,8 @@ BEGIN
                 MESSAGE_TEXT = 'Transition requirement belongs to a different admission';
         END IF;
 
-        IF v_req_type COLLATE utf8mb4_0900_ai_ci <> v_resource_type COLLATE utf8mb4_0900_ai_ci THEN
+        IF v_req_type COLLATE utf8mb4_0900_ai_ci <>
+           v_resource_type COLLATE utf8mb4_0900_ai_ci THEN
             SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 50008,
                 MESSAGE_TEXT = 'Resource type does not match the requirement';
         END IF;
@@ -102,31 +109,53 @@ BEGIN
     SELECT COUNT(*) INTO v_conflicts
       FROM resource_allocation
      WHERE resource_id = p_resource_id
-       AND allocation_status COLLATE utf8mb4_0900_ai_ci = 'ACTIVE' COLLATE utf8mb4_0900_ai_ci
+       AND allocation_status COLLATE utf8mb4_0900_ai_ci =
+           'ACTIVE' COLLATE utf8mb4_0900_ai_ci
        AND start_time < p_end_time
-       AND end_time   > p_start_time;
+       AND end_time > p_start_time;
 
     IF v_conflicts > 0 THEN
         SIGNAL SQLSTATE '45000' SET MYSQL_ERRNO = 50009,
             MESSAGE_TEXT = 'Resource already has an overlapping ACTIVE allocation';
     END IF;
 
-    -- 6. Insert resource_type comes from the resource row, not from the caller
+    -- 6. Insert allocation
     INSERT INTO resource_allocation
-        (admission_id, resource_id, resource_type, start_time, end_time,
-         requirement_id, allocation_status, allocated_by)
+        (
+            admission_id,
+            resource_id,
+            resource_type,
+            start_time,
+            end_time,
+            requirement_id,
+            allocation_status,
+            allocated_by
+        )
     VALUES
-        (p_admission_id, p_resource_id, v_resource_type, p_start_time, p_end_time,
-         p_requirement_id, 'ACTIVE', p_allocated_by);
+        (
+            p_admission_id,
+            p_resource_id,
+            v_resource_type,
+            p_start_time,
+            p_end_time,
+            p_requirement_id,
+            'ACTIVE',
+            p_allocated_by
+        );
 
     SET p_allocation_id = LAST_INSERT_ID();
 
     -- 7. PENDING becomes ALLOCATED
-    IF p_requirement_id IS NOT NULL AND v_req_status COLLATE utf8mb4_0900_ai_ci = 'PENDING' COLLATE utf8mb4_0900_ai_ci THEN
+    IF p_requirement_id IS NOT NULL
+       AND v_req_status COLLATE utf8mb4_0900_ai_ci =
+           'PENDING' COLLATE utf8mb4_0900_ai_ci THEN
+
         UPDATE transition_requirement
            SET status = 'ALLOCATED'
          WHERE requirement_id = p_requirement_id;
     END IF;
 
     COMMIT;
-END;
+END$$
+
+DELIMITER ;
