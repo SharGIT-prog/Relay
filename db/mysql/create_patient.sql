@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS patient (
+    patient_id BIGINT NOT NULL AUTO_INCREMENT,
+    name       VARCHAR(150) NOT NULL,
+    DOB        DATE NOT NULL,
+    PRIMARY KEY (patient_id)
+);
