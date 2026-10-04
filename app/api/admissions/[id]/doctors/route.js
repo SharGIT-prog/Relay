@@ -3,24 +3,17 @@ import {
   ok,
   readJson,
   parseBody,
-  parseParams,
+  parseIdParam,
 } from '@/lib/http.mjs';
 
 import { requireAuth } from '@/lib/auth.mjs';
-import { idNumber } from '@/lib/validate.mjs';
 import { admissionDoctorSchema } from '@/lib/schemas.mjs';
-
-import {
-  assignDoctor,
-} from '@/lib/admission-service.mjs';
+import { assignDoctor } from '@/lib/admission-service.mjs';
 
 export const POST = route(async (request, { params }) => {
   const actor = await requireAuth(request);
 
-  const { id } = parseParams(
-    { id: idNumber },
-    params
-  );
+  const id = parseIdParam((await params).id);
 
   const input = parseBody(
     admissionDoctorSchema,
