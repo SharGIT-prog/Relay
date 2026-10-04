@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS admission (
         FOREIGN KEY (patient_id) REFERENCES patient (patient_id),
     CONSTRAINT fk_admission_facility
         FOREIGN KEY (facility_id) REFERENCES facility (facility_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

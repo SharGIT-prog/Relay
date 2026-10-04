@@ -3,4 +3,4 @@ CREATE TABLE IF NOT EXISTS patient (
     name       VARCHAR(150) NOT NULL,
     DOB        DATE NOT NULL,
     PRIMARY KEY (patient_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
