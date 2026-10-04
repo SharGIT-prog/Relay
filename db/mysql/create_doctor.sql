@@ -4,4 +4,4 @@ CREATE TABLE IF NOT EXISTS doctor (
     specialisation  VARCHAR(120) NOT NULL,
     contact_number  VARCHAR(20) NOT NULL,
     PRIMARY KEY (doctor_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

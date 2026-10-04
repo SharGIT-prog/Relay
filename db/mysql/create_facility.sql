@@ -5,4 +5,4 @@ CREATE TABLE IF NOT EXISTS facility (
     address         VARCHAR(500) NOT NULL,
     contact_number  VARCHAR(20) NOT NULL,
     PRIMARY KEY (facility_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

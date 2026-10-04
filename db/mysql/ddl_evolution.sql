@@ -10,6 +10,10 @@ ALTER TABLE patient
 ALTER TABLE doctor
     ADD INDEX idx_doctor_specialisation (specialisation);
 
+-- Add a useful index for admission-date searches.
+ALTER TABLE admission
+    ADD INDEX idx_admission_date (admission_date);
+
 -- Controlled DROP:
 -- Create a temporary demonstration index and remove it safely.
 ALTER TABLE facility
