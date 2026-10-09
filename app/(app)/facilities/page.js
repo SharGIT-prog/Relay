@@ -211,14 +211,14 @@ export default function FacilitiesPage() {
             <div className="grid grid-2">
               {facilities.map((facility) => (
                 <div
-                  key={facility.facility_id}
+                  key={facility.facilityId}
                   className="card"
                 >
                   <h3>{facility.name}</h3>
 
                   <p>
                     <strong>Type:</strong>{' '}
-                    {facility.facility_type}
+                    {facility.facilityType}
                   </p>
 
                   <p>
@@ -228,7 +228,7 @@ export default function FacilitiesPage() {
 
                   <p>
                     <strong>Contact:</strong>{' '}
-                    {facility.contact_number}
+                    {facility.contactNumber}
                   </p>
                 </div>
               ))}

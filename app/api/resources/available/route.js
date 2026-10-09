@@ -1,0 +1,1 @@
+export { GET } from '../../available/route.js';

@@ -69,9 +69,9 @@ export default function PatientDetailsPage() {
       setDoctors(doctorsData.doctors ?? []);
       setFacilities(facilitiesData.facilities ?? []);
 
-      if (patientData.patient?.admission_id) {
+      if (patientData.patient?.admissionId) {
         const admissionRes = await fetch(
-          `/api/admissions/${patientData.patient.admission_id}`
+          `/api/admissions/${patientData.patient.admissionId}`
         );
 
         if (admissionRes.ok) {
@@ -146,7 +146,7 @@ export default function PatientDetailsPage() {
   async function assignDoctor(event) {
     event.preventDefault();
 
-    if (!assignmentDoctorId || !admission?.admission_id) {
+    if (!assignmentDoctorId || !admission?.admissionId) {
       return;
     }
 
@@ -156,7 +156,7 @@ export default function PatientDetailsPage() {
 
     try {
       const response = await fetch(
-        `/api/admissions/${admission.admission_id}/doctors`,
+        `/api/admissions/${admission.admissionId}/doctors`,
         {
           method: 'POST',
           headers: {
@@ -222,7 +222,7 @@ export default function PatientDetailsPage() {
         <SectionHeader
           tag="Patient"
           title={patient.name}
-          sub={`Patient ID: ${patient.patient_id}`}
+          sub={`Patient ID: ${patient.patientId}`}
         />
 
         <ErrorAlert error={error} />
@@ -247,7 +247,7 @@ export default function PatientDetailsPage() {
 
             <p>
               <strong>Patient ID:</strong>{' '}
-              {patient.patient_id}
+              {patient.patientId}
             </p>
           </section>
 
@@ -258,24 +258,24 @@ export default function PatientDetailsPage() {
               <>
                 <p>
                   <strong>Admission ID:</strong>{' '}
-                  {admission.admission_id}
+                  {admission.admissionId}
                 </p>
 
                 <p>
                   <strong>Facility:</strong>{' '}
-                  {admission.facility_name}
+                  {admission.facilityName}
                 </p>
 
                 <p>
                   <strong>Admission date:</strong>{' '}
-                  {admission.admission_date}
+                  {admission.admissionDate}
                 </p>
 
                 <p>
                   <strong>Status:</strong>{' '}
                   <StatusBadge
                     status={
-                      admission.discharge_date
+                      admission.dischargeDate
                         ? 'COMPLETED'
                         : 'ACTIVE'
                     }
@@ -315,8 +315,8 @@ export default function PatientDetailsPage() {
 
                   {facilities.map((facility) => (
                     <option
-                      key={facility.facility_id}
-                      value={facility.facility_id}
+                      key={facility.facilityId}
+                      value={facility.facilityId}
                     >
                       {facility.name}
                     </option>
@@ -343,8 +343,8 @@ export default function PatientDetailsPage() {
 
                   {doctors.map((doctor) => (
                     <option
-                      key={doctor.doctor_id}
-                      value={doctor.doctor_id}
+                      key={doctor.doctorId}
+                      value={doctor.doctorId}
                     >
                       {doctor.name} — {doctor.specialisation}
                     </option>
@@ -391,7 +391,7 @@ export default function PatientDetailsPage() {
               <div style={{ marginBottom: 24 }}>
                 {admission.doctors.map((doctor) => (
                   <div
-                    key={doctor.doctor_id}
+                    key={doctor.doctorId}
                     className="card"
                     style={{ marginBottom: 12 }}
                   >
@@ -400,7 +400,7 @@ export default function PatientDetailsPage() {
                       {doctor.specialisation}
                     </p>
                     <small>
-                      {doctor.contact_number}
+                      {doctor.contactNumber}
                     </small>
                   </div>
                 ))}
@@ -432,8 +432,8 @@ export default function PatientDetailsPage() {
 
                   {doctors.map((doctor) => (
                     <option
-                      key={doctor.doctor_id}
-                      value={doctor.doctor_id}
+                      key={doctor.doctorId}
+                      value={doctor.doctorId}
                     >
                       {doctor.name} — {doctor.specialisation}
                     </option>

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { api } from '@/lib/client-api.js';
 import { Icon, HeroVisual, ErrorAlert } from '@/components/ui';
+import Link from 'next/link';
+
 
 export default function LoginPage() {
   const router = useRouter();
@@ -38,6 +40,7 @@ export default function LoginPage() {
             <button className="btn btn-primary" style={{ width: '100%' }} disabled={busy}>{busy ? 'Signing in...' : 'Sign in'}</button>
           </div>
         </form>
+        <p className="small" style={{ marginTop: 16 }}>No account yet? <Link href="/signup">Create one</Link></p>
       </div>
       <HeroVisual cards={[
         { icon: 'activity', title: 'Live readiness', sub: 'Know what is outstanding' },

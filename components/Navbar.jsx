@@ -30,7 +30,8 @@ export default function Navbar() {
           <span /><span /><span />
         </button>
         <ul className={`nav-links ${open ? 'open' : ''}`}>
-          {NAV_ITEMS.map((i) => (
+          {/* {NAV_ITEMS.map((i) => ( */}
+          {NAV_ITEMS.filter((i) => !i.roles || i.roles.some((r) => user.roles.includes(r))).map((i) => (
             <li key={i.href}><Link href={i.href} className={isActive(i) ? 'active' : ''}>{i.label}</Link></li>
           ))}
           <li className="nav-user">

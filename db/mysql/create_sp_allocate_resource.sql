@@ -1,15 +1,13 @@
 DROP PROCEDURE IF EXISTS sp_allocate_resource;
 
-DELIMITER $$
-
 CREATE PROCEDURE sp_allocate_resource(
-    IN  p_admission_id    BIGINT,
-    IN  p_resource_id     BIGINT,
-    IN  p_start_time      DATETIME,
-    IN  p_end_time        DATETIME,
-    IN  p_requirement_id  BIGINT,
-    IN  p_allocated_by    BIGINT,
-    OUT p_allocation_id   BIGINT
+    IN  p_admission_id   BIGINT,
+    IN  p_resource_id    BIGINT,
+    IN  p_start_time     DATETIME,
+    IN  p_end_time       DATETIME,
+    IN  p_requirement_id BIGINT,
+    IN  p_allocated_by   BIGINT,
+    OUT p_allocation_id  BIGINT
 )
 BEGIN
     DECLARE v_found            INT DEFAULT 1;
@@ -156,6 +154,4 @@ BEGIN
     END IF;
 
     COMMIT;
-END$$
-
-DELIMITER ;
+END;

@@ -1,7 +1,5 @@
 DROP TRIGGER IF EXISTS trg_allocation_status_requirement;
 
-DELIMITER $$
-
 CREATE TRIGGER trg_allocation_status_requirement
 AFTER UPDATE ON resource_allocation
 FOR EACH ROW
@@ -40,6 +38,4 @@ BEGIN
 
     END IF;
 
-END$$
-
-DELIMITER ;
+END;

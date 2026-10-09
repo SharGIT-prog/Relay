@@ -88,15 +88,15 @@ export default function PatientsPage() {
           <div className="grid grid-2">
             {patients.map((patient) => (
               <Link
-                key={patient.patient_id}
-                href={`/patients/${patient.patient_id}`}
+                key={patient.patientId}
+                href={`/patients/${patient.patientId}`}
                 className="card"
               >
                 <h3>{patient.name}</h3>
 
                 <p>
                   <strong>Patient ID:</strong>{' '}
-                  {patient.patient_id}
+                  {patient.patientId}
                 </p>
 
                 <p>

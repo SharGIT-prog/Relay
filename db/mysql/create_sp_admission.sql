@@ -1,7 +1,5 @@
 DROP PROCEDURE IF EXISTS sp_create_admission;
 
-DELIMITER $$
-
 CREATE PROCEDURE sp_create_admission(
     IN  p_patient_id      BIGINT,
     IN  p_facility_id     BIGINT,
@@ -100,6 +98,4 @@ BEGIN
     COMMIT;
 
     SELECT p_admission_id AS admission_id;
-END$$
-
-DELIMITER ;
+END;

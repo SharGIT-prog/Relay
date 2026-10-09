@@ -8,20 +8,31 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const dir = path.resolve(__dirname, '../db/mysql');
 
 const MANIFEST = [
-  { file: 'create_tables.sql', stub: true },
+  { file: 'create_facility.sql', tolerate: true },
+  { file: 'create_patient.sql', tolerate: true },
+  { file: 'create_doctor.sql', tolerate: true },
+  { file: 'create_admission.sql', tolerate: true },
+  { file: 'create_admission_doctor.sql', tolerate: true },
+  { file: 'create_app_user.sql', tolerate: true },
+  { file: 'create_role.sql', tolerate: true },
+  { file: 'create_user_role.sql', tolerate: true },
+  { file: 'create_api_client.sql', tolerate: true },
+  { file: 'create_sp_admission.sql', tolerate: true },
   { file: 'create_discharge_plan.sql' },
   { file: 'create_resource.sql' },
   { file: 'create_recovery_episode.sql' },
   { file: 'create_transition_requirement.sql' },
   { file: 'create_resource_allocation.sql' },
-  { file: 'create_care_handoff.sql' }, 
+  { file: 'create_care_handoff.sql' },
   { file: 'create_care_document.sql' },
   { file: 'create_audit_log.sql' },
   { file: 'create_sp_allocate_resource.sql' },
   { file: 'create_v_transition_readiness.sql' },
   { file: 'create_trg_allocation_requirement.sql' },
   { file: 'create_api_client_facility.sql' },
+  { file: 'create_v_patient_admission_summary.sql', tolerate: true },
 ];
+
 
 const required = ['MYSQL_HOST', 'MYSQL_PORT', 'MYSQL_USER', 'MYSQL_PASSWORD', 'MYSQL_DATABASE'];
 const missing = required.filter((k) => !process.env[k]);
@@ -64,7 +75,7 @@ async function main() {
   const [rows] = await conn.query('SELECT filename FROM schema_migrations');
   const applied = new Set(rows.map((r) => r.filename));
 
-  for (const { file, stub } of MANIFEST) {
+for (const { file, stub, tolerate } of MANIFEST) {
     if (stub && !applyStubs) {
       console.log(`skip     ${file} (MYSQL_APPLY_STUBS=false)`);
       continue;
@@ -79,6 +90,12 @@ async function main() {
       await conn.query('INSERT INTO schema_migrations (filename) VALUES (?)', [file]);
       console.log(`applied  ${file}`);
     } catch (err) {
+            if (tolerate && [1050, 1304, 1359, 1061].includes(err.errno)) {
+        await conn.query('INSERT IGNORE INTO schema_migrations (filename) VALUES (?)', [file]);
+        console.log(`present  ${file} (objects already exist; recorded)`);
+        continue;
+      }
+      
       console.error(`FAILED   ${file}: ${err.message}`);
       process.exitCode = 1;
       break;
