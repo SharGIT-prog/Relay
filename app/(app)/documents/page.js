@@ -40,7 +40,8 @@ export default function DocumentsPage() {
   useEffect(() => {
     setAdmissions([]); setEpisodes([]); setForm((f) => ({ ...f, admissionId: '', recoveryId: '' }));
     if (!patient) return;
-    api(`/api/admissions${qs({ patientId: patient.patientId })}`).then((d) => setAdmissions(d.admissions)).catch(setError);
+    //api(`/api/admissions${qs({ patientId: patient.patientId })}`).then((d) => setAdmissions(d.admissions)).catch(setError);
+        api(`/api/lookups/admissions${qs({ patientId: patient.patientId })}`).then((d) => setAdmissions(d.admissions)).catch(setError);
     api(`/api/transition-readiness/${patient.patientId}`).then((d) => setEpisodes(d.recoveryEpisodes)).catch(setError);
   }, [patient]);
 
