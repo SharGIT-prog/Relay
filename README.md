@@ -1,110 +1,69 @@
-\# RELAY
+# RELAY
 
+**Developed by:**
 
+* Sharanya R [PES1UG24CS902]
+* Ramya H R [PES1UG25CS835]
 
-\*\*Developed by:\*\*
+---
 
-\- Sharanya R \[PES1UG24CS902]
+## About the Project
 
-\- Ramya H R \[PES1UG25CS835]
+Healthcare delivery frequently involves intricate hand-offs and transactions between hospitals, rehabilitation centers, and specialized treatment facilities. Coordinating patient admissions, medical staff schedules, discharges, recovery monitoring, and resource allocation can quickly become cumbersome.
 
+**RELAY** is a centralized **Continuity-of-Care Hospital Resource Management System** designed to streamline these critical workflows, coordinate seamless patient transfers, track specialized care requirements, and prevent conflicting resource requests.
 
+The platform efficiently manages:
 
-\## About the Project
+* Patients and healthcare professionals
+* Healthcare facilities and admissions
+* Discharge planning and recovery episodes
+* Real-time resource allocation
+* Care handoffs and secure document management
 
+---
 
+## Technology Stack
 
-Healthcare involves multiple hand-offs and transactions between hospitals, rehabilitation centres, and other treatment facilities. Coordinating patient admissions, medical staff, discharges, recovery monitoring, and resource allocation can be complex.
+* **MySQL** – Stores structured operational data about the hospital and its day-to-day activities.
+* **PostgreSQL + pgvector** – Powers semantic retrieval, vector embeddings, and intelligent document search.
+* **Next.js** – Serves as the full-stack web application framework.
 
+---
 
+## Setup and Execution
 
-The \*\*Continuity-of-Care Hospital Resource Management System\*\* is a centralised application designed to streamline these processes, coordinate patient transfers, track care requirements, and prevent conflicting resource requests.
+### Prerequisites
 
+Ensure you have the following installed on your system:
 
+* Node.js and npm
+* MySQL
+* PostgreSQL with the `pgvector` extension enabled
 
-The system manages:
+### Running the Application
 
-\- Patients and healthcare professionals
+1. Clone the repository and navigate to the project directory.
+2. Install the required dependencies:
+```bash
+npm install
 
-\- Healthcare facilities and admissions
+```
 
-\- Discharge planning and recovery episodes
 
-\- Resource allocation
+3. Configure your environment variables by setting up the `.env` file with the required database credentials and keys.
+4. Start the development server:
+```bash
+npm run dev
 
-\- Care handoffs and document management
+```
 
 
+5. Open the application in your browser at:
+**http://localhost:3000**
 
-\## Technology Stack
+---
 
+## Project Objective
 
-
-\- \*\*MySQL\*\* – Information about the hospital and its operations.
-
-\- \*\*PostgreSQL + pgvector\*\* – Semantic retrieval and document search.
-
-\- \*\*Next.js\*\* – Full-stack web application.
-
-
-
-\## Setup and Execution
-
-
-
-\### Prerequisites
-
-\- Node.js and npm
-
-\- MySQL
-
-\- PostgreSQL with pgvector
-
-
-
-\### Run the Application
-
-
-
-1\. Clone the repository and navigate to the project directory.
-
-2\. Install dependencies:
-
-
-
-&#x20;  ```bash
-
-&#x20;  npm install
-
-&#x20;  ```
-
-
-
-3\. Configure the required environment variables in the `.env` file.
-
-4\. Start the development server:
-
-
-
-&#x20;  ```bash
-
-&#x20;  npm run dev
-
-&#x20;  ```
-
-
-
-5\. Open the application in your browser:
-
-
-
-&#x20;  \*\*http://localhost:3000\*\*
-
-
-
-\## Project Objective
-
-
-
-To provide a coordinated healthcare management platform that improves continuity of care, simplifies inter-facility transfers, and supports efficient management of hospital resources and patient recovery.
-
+To provide an integrated, coordinated healthcare management platform that enhances continuity of care, simplifies inter-facility patient transfers, and optimizes the management of hospital resources and patient recovery cycles.
